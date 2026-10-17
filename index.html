@@ -107,6 +107,31 @@
             text-align: center;
         }
 
+        /* Language Switcher */
+        .lang-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 77, 109, 0.15);
+            border: 1px solid var(--rose-main);
+            color: #ffccd5;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--rose-main);
+            color: #fff;
+        }
+
         /* Photo Grid */
         .photo-grid {
             display: grid;
@@ -179,6 +204,13 @@
             margin-bottom: 25px;
         }
 
+        .letter-card.rtl {
+            text-align: right;
+            direction: rtl;
+            border-left: none;
+            border-right: 5px solid var(--rose-main);
+        }
+
         .letter-title {
             font-family: 'Dancing Script', cursive;
             font-size: 2.5rem;
@@ -193,6 +225,10 @@
             text-align: right;
             color: var(--rose-main);
             margin-top: 15px;
+        }
+
+        .signature.rtl {
+            text-align: left;
         }
 
         .heart-particle {
@@ -260,7 +296,14 @@
                 <button class="music-btn" id="audio-toggle" onclick="toggleMusic()">Pausar</button>
             </div>
 
-            <h2 class="letter-title">Para Jahari</h2>
+            <!-- Language Switcher -->
+            <div class="lang-container">
+                <button class="lang-btn active" id="btn-en" onclick="setLanguage('en')">English 🇺🇸</button>
+                <button class="lang-btn" id="btn-es" onclick="setLanguage('es')">Español 🇲🇽</button>
+                <button class="lang-btn" id="btn-ar" onclick="setLanguage('ar')">العربية 🇸🇦</button>
+            </div>
+
+            <h2 class="letter-title" id="letter-title">Para Jahari</h2>
 
             <div class="photo-grid">
                 <div class="photo-card">
@@ -271,14 +314,8 @@
                 </div>
             </div>
 
-            <div class="letter-card">
-Todo empezó en esa app de citas para gamers donde tenías el nombre de tapstrafeintomydms. Yo entré buscando compañía porque me sentía solo, y apareciste tú mandándome un mensaje y hablando de donas. Te contesté con la foto de la velita, queriendo caerte bien desde el primer momento sin imaginar lo que significarías para mí.
-
-Han pasado 5 años. Sé que a veces has puesto un escudo grandísimo para proteger tu corazón, y que en el proceso has soltado palabras o actitudes que a lo mejor dolían, pero entendí perfectamente que nunca fue con mala intención; solo estabas cuidando tu alma y protegiendo lo que sentías. Y a pesar de todo, lo que más admiro de ti es lo noble que eres, cómo jamás juzgas a nadie y cómo defiendes y cuidas con el alma a la gente que amas.
-
-Gracias por aguantarme, por reírte conmigo, por los juegos y por cada momento real que hemos construido. Eres mi persona favorita en este mundo.
-
-<div class="signature">Te amo, Jahari ❤️</div>
+            <div class="letter-card" id="letter-body">
+                <!-- Text inserted dynamically via JS -->
             </div>
         </div>
     </div>
@@ -289,6 +326,60 @@ Gracias por aguantarme, por reírte conmigo, por los juegos y por cada momento r
     </audio>
 
     <script>
+        const translations = {
+            en: {
+                title: "For Jahari",
+                body: `Jahari,
+
+I remember one night when I was feeling really lonely, and I downloaded that stupid app—basically Tinder for gamers. I ran into this one beautiful girl by the username tapstrafeintomydms. I know, crazy name!
+
+I remember your punchline asking how many donuts you could stack on it, and my answer was "2 on my finger." I honestly don't know what made you answer me that night—I'm sure you had so many candidates in your DMs knowing how super pretty you are. But I am so glad you did, because that was the true beginning of our story... our beautiful 5-year story, babe.
+
+We endured and suffered a lot together over the years, through tough times and heartbreak. But alongside those dark moments came times that were so fun and so warm. We spent countless sleepless nights playing Apex. That's what made us fall in love first, and it still holds a special place in my heart, even if it's a shitty game sometimes. Then we found Fortnite, Call of Duty, and so many others.
+
+Somewhere in all of that, I started realizing that you are my home. Even in my darkest times, you were my comfort—the one who made me feel safe and secure. 
+
+I know we're getting married in the upcoming weeks or months, but before we do that, I realized I skipped an important step. I totally forgot to officially ask you to be my girlfriend! But it's okay, because asking you right now is the best way to start this next chapter.
+
+I love you lots, baby. ❤️`,
+                sig: "Forever yours ❤️"
+            },
+            es: {
+                title: "Para Jahari",
+                body: `Jahari,
+
+Recuerdo una noche en la que me sentía muy solo y descargué esa app—básicamente Tinder para gamers. Y me topé con una chica hermosa con el nombre de usuario tapstrafeintomydms. ¡Sé que es un nombre loco!
+
+Recuerdo que tu pregunta fue cuántas donas se podían apilar, y mi respuesta fue "2 en mi dedo". Sinceramente no sé qué te hizo responderem esa noche; estoy seguro de que tenías muchísimos candidatos en tus DMs sabiendo lo hermosa que eres. Pero me alegro tanto de que lo hicieras, porque ese fue el verdadero comienzo de nuestra historia... nuestra hermosa historia de 5 años, mi amor.
+
+Soportamos y atravesamos mucho juntos a lo largo de los años, con momentos difíciles. Pero junto a esos días oscuros vinieron momentos llenos de risas y calidez. Pasamos incontables noches sin dormir jugando Apex. Eso fue lo que nos hizo enamorarnos primero, y todavía tiene un lugar especial en mi corazón, aunque a veces sea un juego malo. Luego encontramos Fortnite, Call of Duty y muchos otros.
+
+En algún punto de todo eso, me di cuenta de que tú eres mi hogar. Incluso en mis momentos más oscuros, fuiste mi consuelo, quien me hizo sentir seguro y en paz.
+
+Sé que nos vamos a casar en las próximas semanas o meses, pero antes de hacer eso, me di cuenta de que me salté un paso muy importante. ¡Olvidé por completo pedirte oficialmente que fueras mi novia! Pero está bien, porque hacer esto ahora es la mejor manera de empezar nuestro siguiente capítulo.
+
+Te amo muchísimo, bebé. ❤️`,
+                sig: "Tuyo para siempre ❤️"
+            },
+            ar: {
+                title: "إلى جاري",
+                body: `جهاري،
+
+أتذكر ليلة عندما كنت أشعر بالوحدة الشديدة، وقمت بتنزيل ذلك التطبيق—تطبيقات التعارف للاعبين. والتقيت بفتاة جميلة تحمل اسم المستخدم tapstrafeintomydms. أعلم أنه اسم مجنون!
+
+أتذكر مزاحك وسؤالك عن عدد الكعكات الدائرية (Donuts) التي يمكن وضعها، وكانت إجابتي "اثنتان على أصبعي". لا أعرف حقًا ما الذي جعلك تجيبينني في تلك الليلة؛ أنا متأكد من أنه كان لديك الكثير من المعجبين في رسائلك الخاصة لكونك جميلة جدًا. لكنني سعيد جدًا لأنك فعلت ذلك، لأن تلك كانت البداية الحقيقية لقصتنا... قصتنا الجميلة التي استمرت 5 سنوات يا حبيبتي.
+
+لقد تحملنا وعانينا الكثير معًا على مر السنين خلال الأوقات الصعبة. ولكن إلى جانب تلك اللحظات، جاءت أوقات مليئة بـ الدفء والفرح. قضينا ليالي لا تحصى دون نوم ونحن نلعب Apex. كان ذلك ما جعلنا نقع في الحب أولاً، ولا يزال يحتل مكانة خاصة في قلبي. ثم وجدنا Fortnite و Call of Duty وغيرها الكثير.
+
+في مكان ما خلال كل ذلك، بدأت أدرك أنكِ أنتِ بيتي. حتى في أحلك أوقاتي، كنتِ أنتِ راحتي وأماني.
+
+أعلم أننا سنتزوج في الأسابيع أو الأشهر القادمة، ولكن قبل أن نفعل ذلك، أدركت أنني تجاوزت خطوة مهمة جدًا. لقد نسيت تمامًا أن أطلب منكِ رسمياً أن تكوني حبيبتي! ولكن لا بأس، لأن طلب ذلك الآن هو أجمل طريقة لبدء فصلنا الجديد.
+
+أحبك كثيراً يا حبيبتي. ❤️`,
+                sig: "لكِ للأبد ❤️"
+            }
+        };
+
         function dodgeNo() {
             const noBtn = document.getElementById('no-btn');
             const x = Math.random() * (window.innerWidth - 120);
@@ -296,6 +387,24 @@ Gracias por aguantarme, por reírte conmigo, por los juegos y por cada momento r
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
+        }
+
+        function setLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${lang}`).classList.add('active');
+
+            const letterCard = document.getElementById('letter-body');
+            const data = translations[lang];
+
+            document.getElementById('letter-title').innerText = data.title;
+            
+            if (lang === 'ar') {
+                letterCard.classList.add('rtl');
+                letterCard.innerHTML = data.body + `<div class="signature rtl">${data.sig}</div>`;
+            } else {
+                letterCard.classList.remove('rtl');
+                letterCard.innerHTML = data.body + `<div class="signature">${data.sig}</div>`;
+            }
         }
 
         function acceptProposal() {
@@ -312,6 +421,9 @@ Gracias por aguantarme, por reírte conmigo, por los juegos y por cada momento r
             setTimeout(() => { 
                 unlocked.style.opacity = '1'; 
             }, 50);
+
+            // Set default language to English (or switch as preferred)
+            setLanguage('en');
 
             // Play music on click
             const music = document.getElementById('bg-music');

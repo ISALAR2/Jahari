@@ -132,9 +132,9 @@
             display: block;
         }
 
-        /* Music Player Banner */
+        /* Music Banner */
         .music-banner {
-            background: rgba(255, 77, 109, 15%);
+            background: rgba(255, 77, 109, 0.15);
             border: 1px solid var(--rose-main);
             padding: 12px 20px;
             border-radius: 50px;
@@ -252,27 +252,27 @@
         </div>
 
         <div id="unlocked-content">
-            <!-- Lil Durk Vibe Audio Player -->
+            <!-- Music Player -->
             <div class="music-banner">
                 <div class="music-info">
-                    🎵 <span>Lil Durk Vibe - Nuestro Soundtrack</span>
+                    🎵 <span>Lil Durk ft. NBA YoungBoy - My Side</span>
                 </div>
-                <button class="music-btn" id="audio-toggle" onclick="toggleMusic()">Reproducir</button>
+                <button class="music-btn" id="audio-toggle" onclick="toggleMusic()">Pausar</button>
             </div>
 
             <h2 class="letter-title">Para Jahari</h2>
 
             <div class="photo-grid">
                 <div class="photo-card">
-                    <img src="517d66e4-75f0-42d1-9dee-e0bb692a44c7.jpg" alt="Foto de nosotros">
+                    <img src="517d66e4-75f0-42d1-9dee-e0bb692a44c7.jpg" alt="Foto 1">
                 </div>
                 <div class="photo-card">
-                    <img src="a9b59fc7-8c0c-4142-ae24-84502574274b.jpg" alt="Recuerdo">
+                    <img src="a9b59fc7-8c0c-4142-ae24-84502574274b.jpg" alt="Foto 2">
                 </div>
             </div>
 
             <div class="letter-card">
-Todo empezó en esa app de citas para gamers donde tenías el nombre de tapstrafeintomydms. Yo entré buscando compañía porque andaba solo, y apareciste tú mandándome un mensaje y hablando de donas. Te contesté con la foto de la velita, queriendo caerte bien desde el primer momento sin imaginar lo que significarías para mí.
+Todo empezó en esa app de citas para gamers donde tenías el nombre de tapstrafeintomydms. Yo entré buscando compañía porque me sentía solo, y apareciste tú mandándome un mensaje y hablando de donas. Te contesté con la foto de la velita, queriendo caerte bien desde el primer momento sin imaginar lo que significarías para mí.
 
 Han pasado 5 años. Sé que a veces has puesto un escudo grandísimo para proteger tu corazón, y que en el proceso has soltado palabras o actitudes que a lo mejor dolían, pero entendí perfectamente que nunca fue con mala intención; solo estabas cuidando tu alma y protegiendo lo que sentías. Y a pesar de todo, lo que más admiro de ti es lo noble que eres, cómo jamás juzgas a nadie y cómo defiendes y cuidas con el alma a la gente que amas.
 
@@ -283,9 +283,9 @@ Gracias por aguantarme, por reírte conmigo, por los juegos y por cada momento r
         </div>
     </div>
 
-    <!-- Background Music Audio Source (Lil Durk instrumental / love vibe link) -->
-    <audio id="bg-music" loop>
-        <source src="https://cdnsongs.com/music/data/English/2022/Voice_To_The_Heroes/Lil_Durk_-_Voice_to_the_Heroes.mp3" type="audio/mpeg">
+    <!-- Audio Source -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="Lil Durk ft.NBA YoungBoy - My Side (Official Audio).mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -313,10 +313,13 @@ Gracias por aguantarme, por reírte conmigo, por los juegos y por cada momento r
                 unlocked.style.opacity = '1'; 
             }, 50);
 
-            // Auto play music on accept
+            // Play music on click
             const music = document.getElementById('bg-music');
-            music.play().catch(e => console.log("Audio play blocked"));
-            document.getElementById('audio-toggle').innerText = 'Pausar';
+            music.play().then(() => {
+                document.getElementById('audio-toggle').innerText = 'Pausar';
+            }).catch(e => {
+                document.getElementById('audio-toggle').innerText = 'Reproducir';
+            });
         }
 
         function toggleMusic() {
